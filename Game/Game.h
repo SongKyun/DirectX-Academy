@@ -18,6 +18,9 @@
 #include <Math/Vector3f.h>
 #include <Math/Matrix4f.h>
 
+#include <Component/Actor.h>
+#include <Component/TransformComponent.h>
+
 namespace STL
 {
 	class Game : public Application
@@ -47,19 +50,23 @@ namespace STL
 		Texture texture3;
 		SamplerState samplerState;
 
-		// 위치/회전/스케일.
-		// 행렬 TRS.
-		Vector3f position = Vector3f::Zero;
-		Vector3f rotation = Vector3f::Zero;
-		Vector3f scale = Vector3f::One;
-		Matrix4f worldMatrix = Matrix4f::Identity();
+		//// 위치/회전/스케일.
+		//// 행렬 TRS.
+		//Vector3f position = Vector3f::Zero;
+		//Vector3f rotation = Vector3f::Zero;
+		//Vector3f scale = Vector3f::One;
+		//Matrix4f worldMatrix = Matrix4f::Identity();
 
-		// 상수버퍼.
-		ConstantBuffer transformBuffer;
+		//// 상수버퍼.
+		//ConstantBuffer transformBuffer;
 
 		//ID3D11ShaderResourceView* texture;
 		//ID3D11ShaderResourceView* texture2;
 		//ID3D11ShaderResourceView* texture3;
 		//ID3D11SamplerState* samplerState;
+
+		//Actor
+		std::unique_ptr<Actor> actor1;
+		std::unique_ptr<Actor> actor2;
 	};
 }
