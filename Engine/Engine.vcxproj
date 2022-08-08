@@ -227,6 +227,8 @@ copy "$(OutDir)Engine.lib" "$(SolutionDir)Lib\Engine\$(Platform)\$(Configuration
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Renderer\Level.h" />
+    <ClInclude Include="Source\Device\DepthStencilView.h" />
     <ClInclude Include="Source\Component\Actor.h" />
     <ClInclude Include="Source\Component\component.h" />
     <ClInclude Include="Source\Component\RTTI.h" />
@@ -261,8 +263,12 @@ copy "$(OutDir)Engine.lib" "$(SolutionDir)Lib\Engine\$(Platform)\$(Configuration
     <ClInclude Include="Source\Math\Vector2f.h" />
     <ClInclude Include="Source\EngineShader\STLTransformShader.h" />
     <ClInclude Include="Source\Component\TransformComponent.h" />
+    <ClInclude Include="Source\Renderer\StaticMesh.h" />
+    <ClInclude Include="Source\Component\StaticMeshComponent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Renderer\Level.cpp" />
+    <ClCompile Include="Source\Device\DepthStencilView.cpp" />
     <ClCompile Include="Source\Component\Actor.cpp" />
     <ClCompile Include="Source\Component\component.cpp" />
     <ClCompile Include="Source\Renderer\ConstantBuffer.cpp" />
@@ -300,6 +306,8 @@ copy "$(OutDir)Engine.lib" "$(SolutionDir)Lib\Engine\$(Platform)\$(Configuration
     <ClCompile Include="Source\Math\Vector2f.cpp" />
     <ClCompile Include="Source\EngineShader\STLTransformShader.cpp" />
     <ClCompile Include="Source\Component\TransformComponent.cpp" />
+    <ClCompile Include="Source\Renderer\StaticMesh.cpp" />
+    <ClCompile Include="Source\Component\StaticMeshComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\PixelShader.hlsl">

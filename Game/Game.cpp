@@ -24,22 +24,22 @@ namespace STL
 		// 장치 참조 저장.
 		auto device = deviceManager->GetDevice();
 
-		VertexPositionColorUV vertices[] =
-		{
-			VertexPositionColorUV({ -0.5f, -0.5f, 0.5f }, { 1.0f, 0.0f, 0.0f }, { 0.0f, 1.0f }),		// 왼쪽 하단.
-			VertexPositionColorUV({ -0.5f,  0.5f, 0.5f}, {0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f }),		// 왼쪽 상단.
-			VertexPositionColorUV({ 0.5f,  0.5f, 0.5f}, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f }),		// 오른쪽 상단.
-			VertexPositionColorUV({ 0.5f, -0.5f, 0.5f}, { 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }),		// 오른쪽 하단.
-		};
+		//VertexPositionColorUV vertices[] =
+		//{
+		//	VertexPositionColorUV({ -0.5f, -0.5f, 0.5f }, { 1.0f, 0.0f, 0.0f }, { 0.0f, 1.0f }),		// 왼쪽 하단.
+		//	VertexPositionColorUV({ -0.5f,  0.5f, 0.5f}, {0.0f, 1.0f, 0.0f }, { 0.0f, 0.0f }),		// 왼쪽 상단.
+		//	VertexPositionColorUV({ 0.5f,  0.5f, 0.5f}, { 0.0f, 0.0f, 1.0f }, { 1.0f, 0.0f }),		// 오른쪽 상단.
+		//	VertexPositionColorUV({ 0.5f, -0.5f, 0.5f}, { 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }),		// 오른쪽 하단.
+		//};
 
-		vertexBuffer = VertexBuffer(vertices, _countof(vertices), sizeof(vertices[0]));
-		vertexBuffer.Create(device);
+		/*vertexBuffer = VertexBuffer(vertices, _countof(vertices), sizeof(vertices[0]));
+		vertexBuffer.Create(device);*/
 
-		// 인덱스 버퍼 생성.
-		uint32 indices[] = { 0, 1, 3, 1, 2, 3 };
+		//// 인덱스 버퍼 생성.
+		//uint32 indices[] = { 0, 1, 3, 1, 2, 3 };
 
-		indexBuffer = IndexBuffer(indices, _countof(indices));
-		indexBuffer.Create(device);
+		/*indexBuffer = IndexBuffer(indices, _countof(indices));
+		indexBuffer.Create(device);*/
 
 		// 쉐이더 초기화.
 		mainShader.Initialize(device);
@@ -66,25 +66,31 @@ namespace STL
 
 		samplerState.Create(device);
 
-		// 물체 생성.
-		actor1 = std::make_unique<Actor>(device);
-		actor1->Create(device);
-		// X,Y 스케일을 1/2로 축소.
-		actor1->SetScale(0.5f, 0.5f, 1.0f);
-		// 물체 위치를 왼쪽으로 0.5만큼 이동.
-		actor1->SetPosition(-0.5f, 0.0f, 0.5f);
+		//// 물체 생성.
+		//actor1 = std::make_unique<Actor>(device);
+		//actor1->Create(device);
+		//// X,Y 스케일을 1/2로 축소.
+		//actor1->SetScale(0.5f, 0.5f, 1.0f);
+		//// 물체 위치를 왼쪽으로 0.5만큼 이동.
+		//actor1->SetPosition(-0.5f, 0.0f, 0.5f);
 
-		actor2 = std::make_unique<Actor>(device);
-		actor2->Create(device);
-		// X,Y 스케일을 1/2로 축소.
-		actor2->SetScale(0.5f, 0.5f, 1.0f);
-		// 물체 위치를 오른쪽으로 0.5만큼 이동.
-		actor2->SetPosition(0.5f, 0.0f, 0.5f);
+		//actor2 = std::make_unique<Actor>(device);
+		//actor2->Create(device);
+		//// X,Y 스케일을 1/2로 축소.
+		//actor2->SetScale(0.5f, 0.5f, 1.0f);
+		//// 물체 위치를 오른쪽으로 0.5만큼 이동.
+		//actor2->SetPosition(0.5f, 0.0f, 0.5f);
+
+		//레벨 초기화
+		mainLevel.Initialize(device);
 	}
 
 	void Game::Update(float deltaTime)
 	{
-		static float alpha = 0.0f;
+		auto context = deviceManager->GetContext();
+		mainLevel.Update(context, deltaTime);
+
+		/*static float alpha = 0.0f;
 		static float sign = 1.0f;
 		static float moveSpeed = 0.5f;
 		static float actorOffset = actor1->Position().x;
@@ -110,11 +116,11 @@ namespace STL
 
 		float xPosition = MathHelper::Lerpf(xStart, xEnd, alpha);
 		actor1->SetPosition(xPosition + actorOffset, 0.0f, 0.0f);
-		actor2->SetPosition(xPosition + actorOffset2, 0.0f, 0.0f);
+		actor2->SetPosition(0.0f, xPosition + actorOffset2, 0.2f);
 
 		auto context = deviceManager->GetContext();
 		actor1->Update(context, deltaTime);
-		actor2->Update(context, deltaTime);
+		actor2->Update(context, deltaTime);*/
 	}
 
 	void Game::RenderScene()
@@ -124,10 +130,10 @@ namespace STL
 		// Draw 함수를 실행하기 전에 GPU에서 사용할 리소스를 모두 바인딩(연결)한다.
 		// 순서는 상관 없음.
 		inputLayout.Bind(context);
-		vertexBuffer.Bind(context);
+		//vertexBuffer.Bind(context);
 		mainShader.Bind(context);
 
-		indexBuffer.Bind(context);
+		//indexBuffer.Bind(context);
 
 		texture.Bind(context, 0);
 		texture2.Bind(context, 1);
@@ -135,14 +141,17 @@ namespace STL
 
 		samplerState.Bind(context, 0);
 
-		actor1->Bind(context);
+		mainLevel.Bind(context);
+		mainLevel.Draw(context);
 
-		// 드로우 콜 (Draw Call).
-		//context->Draw(vertexBuffer.Count(), 0);
-		context->DrawIndexed(indexBuffer.Count(), 0u, 0u);
+		//actor1->Bind(context);
 
-		actor2->Bind(context);
+		//// 드로우 콜 (Draw Call).
+		////context->Draw(vertexBuffer.Count(), 0);
+		//context->DrawIndexed(indexBuffer.Count(), 0u, 0u);
 
-		context->DrawIndexed(indexBuffer.Count(), 0u, 0u);
+		//actor2->Bind(context);
+
+		//context->DrawIndexed(indexBuffer.Count(), 0u, 0u);
 	}
 }

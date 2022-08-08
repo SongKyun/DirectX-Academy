@@ -3,6 +3,7 @@
 #include <Core/Core.h>
 #include "SwapChain.h"
 #include "RenderTargetView.h"
+#include "DepthStencilView.h"
 
 namespace STL
 {
@@ -34,9 +35,9 @@ namespace STL
 	private:
 		ID3D11Device* device;
 		ID3D11DeviceContext* context;
-		//IDXGISwapChain* swapChain;
+
 		SwapChain swapChain;
-		//ID3D11RenderTargetView* renderTargetView;
 		RenderTargetView renderTargetView;
+		DepthStencilView depthStencilView;
 	};
 }

@@ -2,6 +2,7 @@
 #include "Actor.h"
 #include "TransformComponent.h"
 #include <Math/Vector3f.h>
+#include "StaticMeshComponent.h"
 
 namespace STL
 {
@@ -50,11 +51,26 @@ namespace STL
 
 	void Actor::Bind(ID3D11DeviceContext* context)
 	{
+		//트랜스폼 바인딩
 		transform->Bind(context);
-
+		// 컴포넌트의 간접 호출
 		for (const auto& component : components)
 		{
 			component->Bind(context);
+		}
+	}
+
+	void Actor::Draw(ID3D11DeviceContext* context)
+	{
+		transform->Bind(context);
+
+		for (const auto component : components)
+		{
+			auto meshComponent = component->As<StaticMeshComponent>();
+			if (meshComponent != nullptr)
+			{
+				meshComponent->Draw(context);
+			}
 		}
 	}
 

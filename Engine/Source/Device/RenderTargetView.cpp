@@ -35,9 +35,9 @@ namespace STL
 		ThrowIfFailed(result, "Failed to create render target");
 	}
 
-	void RenderTargetView::Bind(ID3D11DeviceContext* context)
+	void RenderTargetView::Bind(ID3D11DeviceContext* context, ID3D11DepthStencilView* depthStencilView)
 	{
-		context->OMSetRenderTargets(1, &renderTargetView, nullptr);
+		context->OMSetRenderTargets(1, &renderTargetView, depthStencilView);
 	}
 
 	void RenderTargetView::Clear(ID3D11DeviceContext* context, const float* clearColor)
