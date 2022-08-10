@@ -40,6 +40,9 @@ namespace STL
 		virtual void Update(float deltaTime = 0.0f) override;
 		virtual void RenderScene() override;
 
+		virtual void ProcessInput() override;
+
+
 	private:
 		//VertexBuffer vertexBuffer;
 		//IndexBuffer indexBuffer;

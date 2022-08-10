@@ -15,7 +15,7 @@ namespace STL
 		DemoLevel();
 		~DemoLevel();
 		
-		void Initialize(ID3D11Device* device) override;
+		void Initialize(ID3D11Device* device, Application* engine) override;
 
 	};
 }

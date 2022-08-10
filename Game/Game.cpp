@@ -4,6 +4,8 @@
 #include <Utility/STLException.h>
 #include <Math/MathHelper.h>
 
+#include <Device/KeyboardInput.h>
+
 namespace STL
 {
 	Game::Game(HINSTANCE hInstance, uint32 width, uint32 height, const std::wstring& title)
@@ -82,7 +84,7 @@ namespace STL
 		//actor2->SetPosition(0.5f, 0.0f, 0.5f);
 
 		//레벨 초기화
-		mainLevel.Initialize(device);
+		mainLevel.Initialize(device, this); // Application 으로 this 로 넘겨줌
 	}
 
 	void Game::Update(float deltaTime)
@@ -153,5 +155,18 @@ namespace STL
 		//actor2->Bind(context);
 
 		//context->DrawIndexed(indexBuffer.Count(), 0u, 0u);
+	}
+
+	void Game::ProcessInput()
+	{
+		Application::ProcessInput();
+
+		if (keyboard->IsKeyDown(Keys::Escape))
+		{
+			if (MessageBox(nullptr, L"종료 하시겠습니까?", L"종료", MB_YESNO) == IDYES)
+			{
+				DestroyWindow(mainWindow->Handle());
+			}
+		}
 	}
 }
