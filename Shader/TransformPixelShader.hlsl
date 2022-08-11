@@ -20,5 +20,6 @@ float4 main(PSInput input) : SV_TARGET
 
 	//return float4(input.color, 1);
 	// 1-x: one minus.
-	return (mapColor1 * 0.2) + (1 - mapColor2);
+	//return (mapColor1 * 0.2) + (1 - mapColor2);
+    return mapColor1;
 }

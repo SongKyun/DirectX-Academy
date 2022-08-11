@@ -44,7 +44,7 @@ namespace STL
 		indexBuffer.Create(device);*/
 
 		// 쉐이더 초기화.
-		mainShader.Initialize(device);
+		//mainShader.Initialize(device);
 
 		// 입력 레이아웃 생성.
 		D3D11_INPUT_ELEMENT_DESC layout[] =
@@ -54,10 +54,10 @@ namespace STL
 			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 		};
 
-		inputLayout.Create(device, layout, _countof(layout), mainShader.GetVertexShaderBuffer());
+		//inputLayout.Create(device, layout, _countof(layout), mainShader.GetVertexShaderBuffer());
 
 		// 텍스처 로딩.
-		texture = Texture(L"sample.jpg");
+		/*texture = Texture(L"sample.jpg");
 		texture.Create(device);
 
 		texture2 = Texture(L"directx.png");
@@ -66,7 +66,7 @@ namespace STL
 		texture3 = Texture(L"circle.jpg");
 		texture3.Create(device);
 
-		samplerState.Create(device);
+		samplerState.Create(device);*/
 
 		//// 물체 생성.
 		//actor1 = std::make_unique<Actor>(device);
@@ -131,17 +131,17 @@ namespace STL
 
 		// Draw 함수를 실행하기 전에 GPU에서 사용할 리소스를 모두 바인딩(연결)한다.
 		// 순서는 상관 없음.
-		inputLayout.Bind(context);
-		//vertexBuffer.Bind(context);
-		mainShader.Bind(context);
+		//inputLayout.Bind(context);
+		////vertexBuffer.Bind(context);
+		//mainShader.Bind(context);
 
-		//indexBuffer.Bind(context);
+		////indexBuffer.Bind(context);
 
-		texture.Bind(context, 0);
-		texture2.Bind(context, 1);
-		texture3.Bind(context, 2);
+		//texture.Bind(context, 0);
+		//texture2.Bind(context, 1);
+		//texture3.Bind(context, 2);
 
-		samplerState.Bind(context, 0);
+		//samplerState.Bind(context, 0);
 
 		mainLevel.Bind(context);
 		mainLevel.Draw(context);

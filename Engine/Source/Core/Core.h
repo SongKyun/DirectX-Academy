@@ -5,6 +5,9 @@
 #define UNICODE
 #endif
 
+#define NOMINMAX
+#define WIN32_LEAN_AND_MEAN
+
 // 미봉책.
 // C4251 컴파일 오류 비활성화.
 #pragma warning(disable: 4251)

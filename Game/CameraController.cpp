@@ -7,7 +7,7 @@ namespace STL
 {
 	CameraController::CameraController()
 		: keyboard(nullptr), mouse(nullptr),
-		moveSpeed(30.0f), rotateSpeed(20.0f)
+		moveSpeed(30.0f), rotateSpeed(15.0f)
 	{
 	}
 
