@@ -5,19 +5,20 @@
 namespace STL
 {
 	ConstantBuffer::ConstantBuffer()
-		: Buffer()
+		: Buffer(), bindShaderTarget(BindShaderTarget::VertexShader)
 	{
 	}
-	
+
 	ConstantBuffer::ConstantBuffer(void* data, size_t count, uint32 byteWidth)
-		: Buffer(data, count, byteWidth)
+		: Buffer(data, count, byteWidth),
+		bindShaderTarget(BindShaderTarget::VertexShader)
 	{
 	}
-	
+
 	ConstantBuffer::~ConstantBuffer()
 	{
 	}
-	
+
 	void ConstantBuffer::Create(ID3D11Device* device)
 	{
 		// 버퍼 생성.
@@ -36,7 +37,7 @@ namespace STL
 		auto result = device->CreateBuffer(&desc, &bufferData, &buffer);
 		ThrowIfFailed(result, "Failed to create constant buffer");
 	}
-	
+
 	void ConstantBuffer::Update(ID3D11DeviceContext* context, void* data)
 	{
 		D3D11_MAPPED_SUBRESOURCE mappedResource = {};
@@ -45,12 +46,24 @@ namespace STL
 		memcpy(mappedResource.pData, data, byteWidth);
 		context->Unmap(buffer, 0);
 	}
-	
+
 	void ConstantBuffer::Bind(ID3D11DeviceContext* context, uint32 index)
 	{
-		context->VSSetConstantBuffers(index, 1, &buffer);
+		if (bindShaderTarget == BindShaderTarget::VertexShader)
+		{
+			context->VSSetConstantBuffers(index, 1, &buffer);
+		}
+		else if (bindShaderTarget == BindShaderTarget::PixelShader)
+		{
+			context->PSSetConstantBuffers(index, 1, &buffer);
+		}
 	}
-	
+
+	void ConstantBuffer::SetBindShaderTarget(BindShaderTarget bindShaderTarget)
+	{
+		this->bindShaderTarget = bindShaderTarget;
+	}
+
 	void ConstantBuffer::Bind(ID3D11DeviceContext* context)
 	{
 		Bind(context, 0);

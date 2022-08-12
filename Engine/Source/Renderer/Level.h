@@ -6,7 +6,6 @@ namespace STL
 {
 	class Actor;
 	class Application;
-
 	class ENGINE_API Level
 	{
 	public:
@@ -21,7 +20,7 @@ namespace STL
 
 	protected:
 		std::vector<Actor*> actors;
-
 		Actor* mainCamera;
+		Actor* mainLight;
 	};
 }
