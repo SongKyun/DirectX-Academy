@@ -14,8 +14,9 @@ struct VSOutput
 {
 	float4 position : SV_POSITION;
 	float3 color : COLOR;
-	float2 texCoord : TEXCOORD;
+	float2 texCoord : TEXCOORD0;
 	float3 normal : NORMAL;
+	float3 cameraDirection : TEXCOORD1;
 };
 
 // 상수 버퍼.
@@ -31,7 +32,7 @@ cbuffer Camera : register(b1)
 {
 	matrix view;
 	matrix projection;
-	float3 position;
+	float3 cameraPosition;
 	float padding;
 };
 
@@ -44,6 +45,10 @@ VSOutput main(VSInput input)
 	
 	// 정점 변환(공간 변환).
 	output.position = mul(output.position, world);
+	
+	// 카메라 방향.
+    output.cameraDirection = normalize((float3)output.position - cameraPosition);
+	
 	output.position = mul(output.position, view);
 	output.position = mul(output.position, projection);
 	

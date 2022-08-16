@@ -5,15 +5,17 @@ struct VSInput
     float3 color : COLOR;
     float2 texCoord : TEXCOORD;
     float3 normal : NORMAL;
+    float3 binormal : BINORMAL;
+    float3 tangent : TANGENT;
 };
 
 // 정점 쉐이더 출력 -> 픽셀 쉐이더의 입력.
 struct VSOutput
 {
-    float4 position : SV_POSITION;
-    float3 color : COLOR;
-    float2 texCoord : TEXCOORD;
-    float3 normal : NORMAL;
+	float4 position : SV_POSITION;
+	float3 color : COLOR;
+	float2 texCoord : TEXCOORD;
+	float3 normal : NORMAL;
 };
 
 // 상수 버퍼.
@@ -21,37 +23,35 @@ cbuffer Transform : register(b0)
 {
 	// 행렬
 	//float4x4 
-    matrix world;
+	matrix world;
 };
 
-// 카메라의 뷰행렬/ 투영행렬/위치 값을 전달하는
+// 카메라의 뷰행렬/투영행렬/위치 값을 전달하는 상수버퍼.
 cbuffer Camera : register(b1)
 {
-    matrix view;
-    matrix projection;
-    float3 position;
-    float padding;
+	matrix view;
+	matrix projection;
+	float3 position;
+	float padding;
 };
-
-
 
 VSOutput main(VSInput input)
 {
-    VSOutput output;
-    
-    // 동차좌표로 변환
-    output.position = float4(input.position, 1);
+	VSOutput output;
 	
-	//정점 변환(공간 변환).
-    output.position = mul(output.position, world);
-    output.position = mul(output.position, view);
-    output.position = mul(output.position, projection);
+	// 동차좌표로 변환.
+	output.position = float4(input.position, 1);
 	
-    output.color = input.color;
-    output.texCoord = input.texCoord;
-    
-    //노멀도 로컬 -> 월드 공간으로 변환
-    output.normal = mul(input.normal, (float3x3) world);
+	// 정점 변환(공간 변환).
+	output.position = mul(output.position, world);
+	output.position = mul(output.position, view);
+	output.position = mul(output.position, projection);
+	
+	output.color = input.color;
+	output.texCoord = input.texCoord;
+	
+	// 노멀도 로컬 -> 월드 공간으로 변환.
+	output.normal = mul(input.normal, (float3x3)world);
 
-    return output;
+	return output;
 }

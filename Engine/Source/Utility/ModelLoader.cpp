@@ -117,7 +117,7 @@ namespace STL
 
 	void ModelLoader::ProcessMesh(ID3D11Device* device, const aiMesh* mesh, const aiScene* scene, StaticMesh* outMesh)
 	{
-		std::vector<VertexPositionColorUVNormal> vertices;
+		std::vector<VertexPositionColorUVNormalTangentBinormal> vertices;
 		//std::vector<VertexPositionUV> vertices;
 		std::vector<uint32> indices;
 		std::vector<std::wstring> textures;
@@ -142,7 +142,10 @@ namespace STL
 			Vector3f binormal;
 			LoadTangentAndBiNormal(mesh, ix, tangent, binormal);
 
-			VertexPositionColorUVNormal vertex(position, color, uv, normal);
+			VertexPositionColorUVNormalTangentBinormal vertex(
+				position, color, uv, normal, binormal, tangent
+			);
+
 			//vertices.emplace_back(vertex);
 			//VertexPositionUV vertex(position, uv);
 			vertices.emplace_back(vertex);
@@ -157,31 +160,29 @@ namespace STL
 			indices.emplace_back(face.mIndices[2]);
 		}
 
-	/*	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-		aiString diffusePath;
-		aiGetMaterialTexture(material, aiTextureType::aiTextureType_DIFFUSE, 0, &diffusePath);
+		//aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+		//aiString diffusePath;
+		//aiGetMaterialTexture(material, aiTextureType::aiTextureType_DIFFUSE, 0, &diffusePath);
 
-		TransformMaterial* transformMaterial = nullptr;
-		if (diffusePath != aiString(""))
-		{
-			textures.emplace_back(GetFileNameOnly(diffusePath));
-			transformMaterial = new TransformMaterial();
-			transformMaterial->AddTexture(new Texture(textures[textures.size() - 1]));
-		}
+		//TransformMaterial* transformMaterial = nullptr;
+		//if (diffusePath != aiString(""))
+		//{
+		//	textures.emplace_back(GetFileNameOnly(diffusePath));
+		//	transformMaterial = new TransformMaterial();
+		//	transformMaterial->AddTexture(new Texture(textures[textures.size() - 1]));
+		//}
 
-		if (transformMaterial != nullptr)
-		{
-			outMesh->AddMaterial(transformMaterial);
-			transformMaterial->Initialize(device);
-		}*/
-
-		//SubMesh* outMesh = new SubMesh();
+		//if (transformMaterial != nullptr)
+		//{
+		//	outMesh->AddMaterial(transformMaterial);
+		//	transformMaterial->Initialize(device);
+		//}
 
 		outMesh->AddSubMesh(device,
 			vertices.data(), static_cast<uint32>(vertices.size()), sizeof(vertices[0]),
 			indices.data(), static_cast<uint32>(indices.size())
 		);
 
-		//return outMesh;
+		
 	}
 }
